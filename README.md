@@ -28,3 +28,6 @@ Esta aplicação serve como base para implementação de pipelines de CI/CD com 
 ```bash
 git clone https://github.com/antoniovcampbell/devcalc-api.git
 cd devcalc-api
+```
+
+![Status do CI](https://github.com/antoniovcampbell/devcalc-api/actions/workflows/ci.yml/badge.svg)

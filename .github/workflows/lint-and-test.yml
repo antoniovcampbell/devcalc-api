@@ -1,0 +1,42 @@
+name: Lint and Test
+
+on:
+  workflow_call:
+    inputs:
+      run_tests:
+        required: true
+        type: boolean
+      run_lint:
+        required: true
+        type: boolean
+
+jobs:
+  lint-job:
+    if: ${{ inputs.run_lint }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Checkstyle (Marketplace Action)
+        # Exemplo de Action do Marketplace para Java
+        uses: dbelyaev/action-checkstyle@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          level: warning
+
+  test-job:
+    if: ${{ inputs.run_tests }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Run Maven Tests
+        run: mvn test
