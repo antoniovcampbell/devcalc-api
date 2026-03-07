@@ -1,0 +1,16 @@
+name: Self Hosted Check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  runner-check:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - run: uname -a
+      - run: java -version
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y tree
+      - run: tree -L 2

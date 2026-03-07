@@ -1,0 +1,37 @@
+name: Deploy DevCalc
+
+on:
+  push:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-dev:
+    if: ${{ github.ref == 'refs/heads/dev' }}
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - run: mvn test
+      - run: echo "Deploy dev em ${{ vars.DEPLOY_URL }}"
+
+  deploy-prod:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - run: mvn test
+      - env:
+          PROD_TOKEN: ${{ secrets.PROD_TOKEN }}
+        run: echo "Deploy prod em ${{ vars.DEPLOY_URL }} com token de ${#PROD_TOKEN} caracteres"

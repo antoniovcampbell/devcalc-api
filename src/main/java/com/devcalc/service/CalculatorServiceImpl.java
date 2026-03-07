@@ -24,4 +24,12 @@ public class CalculatorServiceImpl implements CalculatorService {
         }
         return a / b;
     }
+
+    @Override
+    public double sqrt(double x) {
+        if (x < 0) {
+            throw new IllegalArgumentException("Negative numbers are not allowed");
+        }
+        return Math.sqrt(x);
+    }
 }

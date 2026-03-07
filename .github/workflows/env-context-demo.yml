@@ -1,0 +1,32 @@
+name: Env Context Demo
+
+on:
+  workflow_dispatch:
+
+env:
+  STAGE: test
+  LEVEL: workflow
+
+jobs:
+  show-contexts:
+    runs-on: ubuntu-latest
+    env:
+      LEVEL: job
+      JOB_ONLY: enabled
+    steps:
+      - run: |
+          echo "actor=${{ github.actor }}"
+          echo "runner_os=${{ runner.os }}"
+          echo "stage=$STAGE"
+          echo "level=$LEVEL"
+          echo "job_only=$JOB_ONLY"
+      - env:
+          LEVEL: step
+          STEP_ONLY: enabled
+        run: |
+          echo "actor=${{ github.actor }}"
+          echo "runner_os=${{ runner.os }}"
+          echo "stage=$STAGE"
+          echo "level=$LEVEL"
+          echo "job_only=$JOB_ONLY"
+          echo "step_only=$STEP_ONLY"

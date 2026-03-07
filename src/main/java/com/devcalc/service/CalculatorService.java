@@ -5,4 +5,5 @@ public interface CalculatorService {
     int subtract(int a, int b);
     int multiply(int a, int b);
     int divide(int a, int b);
+    double sqrt(double x);
 }
